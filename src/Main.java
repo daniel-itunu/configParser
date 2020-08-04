@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -127,13 +128,12 @@ class ConfigParser {
 	 * @throws IOException if problem with reading file
 	 */
 	public void readDatabaseName() throws IOException {
-		//"/Users/user/Downloads/Task-Two-master/src/" + getFilename())
 		File file = new File("./"+getFilename());
-		String path = file.getAbsolutePath();
+		String path = file.getAbsolutePath(); //get relative path to current working directory
 		Pattern pattern = Pattern.compile("dbname=\\w+"); //create pattern to match database name
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(path)); //using most enhanced character-based reader, BufferReader
 		String line = bufferedReader.readLine();
-		ArrayList<String> dbnameLines = new ArrayList(); //store every line that "dbname=" appears into an arraylist in order to obtain first dbname occurrence
+		List<String> dbnameLines = new ArrayList(); //store every line that "dbname=" appears into an arraylist in order to obtain first dbname occurrence
 		String dbnameLine; //a single line where "dbname=" appears
 		String[] lineArray; //obtain string array after spliting any line "dbname=" appears in
 		String databaseName; //database name result
@@ -154,7 +154,6 @@ class ConfigParser {
 	/**
 	 * Reads the config file for application name.
 	 * @throws IOException if problem with reading file
-	 * @return application name
 	 */
 	public void readApplicationName() throws IOException {
 		File file = new File("./"+getFilename());
@@ -162,9 +161,9 @@ class ConfigParser {
 		Pattern pattern = Pattern.compile("^d?^b?name=\\w+"); //create pattern to match application name
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
 		String line= bufferedReader.readLine();
-		ArrayList<String> appNameLines = new ArrayList(); //store every line that application name appears into an arraylist in order to obtain first dbname occurrence
+		List<String> appNameLines = new ArrayList(); //store every line that application name appears into an arraylist in order to obtain first dbname occurrence
 		String appNameLine; //a single line where application name appears
-		String[] lineArray; //obtain string array after spliting any line application name appears in
+		String[] lineArray; //obtain string array after splitting any line application name appears in
 		String applicationName; //application name result
 		while (line != null) {
 			Matcher matcher = pattern.matcher(line);
