@@ -15,17 +15,9 @@
  * 		ii. readApplicationName()
  * 		iii. get(String key)
  */
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;
+import java.util.*;
+
 
 public class Main {
 	public static String[] arguments; //String array of environments(production,staging or development)
@@ -35,7 +27,7 @@ public class Main {
 		arguments = args;
 		//based on environment call configParser
 		ConfigParser config = new ConfigParser();
-		System.out.println(config.get("name"));
+		System.out.println(config.get("dbname"));
 		System.out.println(config.get("application.name"));
 		System.out.println(config.get("host"));
 		System.out.println(config.get("mode"));
@@ -131,7 +123,8 @@ class ConfigParser {
 				String[] keyValue = value.split("=");
 				if(keyValue[0].equals("name")){
 					map.putIfAbsent("application."+keyValue[0], keyValue[1]);
-				} else {map.putIfAbsent(keyValue[0],keyValue[1]);}
+				}
+				map.putIfAbsent(keyValue[0],keyValue[1]);
 			}
 		}
 	}
