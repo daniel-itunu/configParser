@@ -11,9 +11,8 @@
  * 		iv. isDevelopment()
  * 2. InnerClass ConfigParser
  * 	Inner Class ConfigParser has the following methods:
- * 		i. readDatabaseName()
- * 		ii. readApplicationName()
- * 		iii. get(String key)
+ * 		i. readData()
+ * 		ii. get(String key)
  */
 import java.io.*;
 import java.util.*;
@@ -109,11 +108,11 @@ class ConfigParser {
 	 * Reads the config file for database name.
 	 * @throws IOException if problem with reading file
 	 */
-	public void readDatabaseName() throws IOException {
+	public void readData() throws IOException {
 		File file = new File("./"+getFilename());
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(file)); //using most enhanced character-based reader, BufferReader
-		String line = bufferedReader.readLine();
-		List<String> lines = new ArrayList<>();
+		String line = bufferedReader.readLine(); //individual line
+		List<String> lines = new ArrayList<>(); //list of lines
 		while (line!= null){
 			lines.add(line);
 			line = bufferedReader.readLine();
@@ -135,7 +134,7 @@ class ConfigParser {
 	 * @return value based on key passed, if key not found, this returns "no such key found"
 	 */
 	public String get(String key) throws IOException {
-		readDatabaseName();
+		readData();
 		return map.get(key);
 	}
 }
