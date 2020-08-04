@@ -34,19 +34,11 @@ public class Main {
 		// TODO Auto-generated method stub=
 		arguments = args;
 		//based on environment call configParser
-		if (isProduction()) {
-			ConfigParser config = new ConfigParser();
-			System.out.println(config.get("dbname"));
-			System.out.println(config.get("application.name"));
-		} else if (isStaging()) {
-			ConfigParser config = new ConfigParser();
-			System.out.println(config.get("dbname"));
-			System.out.println(config.get("application.name"));
-		} else if (isDevelopment()) {
-			ConfigParser config = new ConfigParser();
-			System.out.println(config.get("dbname"));
-			System.out.println(config.get("application.name"));
-		} else {System.err.println("unrecognised environment. specify appropriate environment");}
+		ConfigParser config = new ConfigParser();
+		System.out.println(config.get("name"));
+		System.out.println(config.get("application.name"));
+		System.out.println(config.get("host"));
+		System.out.println(config.get("mode"));
 	}
 
 	/**
@@ -127,54 +119,21 @@ class ConfigParser {
 	 */
 	public void readDatabaseName() throws IOException {
 		File file = new File("./"+getFilename());
-		String path = file.getAbsolutePath(); //get relative path to current working directory
-		Pattern pattern = Pattern.compile("dbname=\\w+"); //create pattern to match database name
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(path)); //using most enhanced character-based reader, BufferReader
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(file)); //using most enhanced character-based reader, BufferReader
 		String line = bufferedReader.readLine();
-		List<String> dbnameLines = new ArrayList(); //store every line that "dbname=" appears into an arraylist in order to obtain first dbname occurrence
-		String dbnameLine; //a single line where "dbname=" appears
-		String[] lineArray; //obtain string array after spliting any line "dbname=" appears in
-		String databaseName; //database name result
-		while (line != null) {
-			Matcher matcher = pattern.matcher(line);
-			while (matcher.find()) {
-				dbnameLine = matcher.group();
-				dbnameLines.add(dbnameLine);
-			}
+		List<String> lines = new ArrayList<>();
+		while (line!= null){
+			lines.add(line);
 			line = bufferedReader.readLine();
 		}
-		lineArray = dbnameLines.get(0).split("=");
-		databaseName = lineArray[1];
-		bufferedReader.close();
-		map.put("dbname", databaseName);
-	}
-
-	/**
-	 * Reads the config file for application name.
-	 * @throws IOException if problem with reading file
-	 */
-	public void readApplicationName() throws IOException {
-		File file = new File("./"+getFilename());
-		String path = file.getAbsolutePath();
-		Pattern pattern = Pattern.compile("^d?^b?name=\\w+"); //create pattern to match application name
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
-		String line= bufferedReader.readLine();
-		List<String> appNameLines = new ArrayList(); //store every line that application name appears into an arraylist in order to obtain first dbname occurrence
-		String appNameLine; //a single line where application name appears
-		String[] lineArray; //obtain string array after splitting any line application name appears in
-		String applicationName; //application name result
-		while (line != null) {
-			Matcher matcher = pattern.matcher(line);
-			while (matcher.find()){
-				appNameLine = matcher.group();
-				appNameLines.add(appNameLine);
+		for(String value: lines){
+			if(value.contains("=")){
+				String[] keyValue = value.split("=");
+				if(keyValue[0].equals("name")){
+					map.putIfAbsent("application."+keyValue[0], keyValue[1]);
+				} else {map.putIfAbsent(keyValue[0],keyValue[1]);}
 			}
-			line = bufferedReader.readLine();
 		}
-		lineArray = appNameLines.get(0).split("=");
-		applicationName = lineArray[1];
-		bufferedReader.close();
-		map.put("application.name", applicationName);
 	}
 
 	/**
@@ -184,13 +143,6 @@ class ConfigParser {
 	 */
 	public String get(String key) throws IOException {
 		readDatabaseName();
-		readApplicationName();
-		if(key.equals("dbname")){
-			return map.get(key);
-		}
-		if(key.equals("application.name")){
-			return map.get(key);
-		}
-		return "no such key found";
+		return map.get(key);
 	}
 }
