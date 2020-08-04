@@ -16,8 +16,10 @@
  * 		iii. get(String key)
  */
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -125,8 +127,11 @@ class ConfigParser {
 	 * @throws IOException if problem with reading file
 	 */
 	public void readDatabaseName() throws IOException {
+		//"/Users/user/Downloads/Task-Two-master/src/" + getFilename())
+		File file = new File("./"+getFilename());
+		String path = file.getAbsolutePath();
 		Pattern pattern = Pattern.compile("dbname=\\w+"); //create pattern to match database name
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/user/Downloads/Task-Two-master/src/" + getFilename())); //using most enhanced character-based reader, BufferReader
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(path)); //using most enhanced character-based reader, BufferReader
 		String line = bufferedReader.readLine();
 		ArrayList<String> dbnameLines = new ArrayList(); //store every line that "dbname=" appears into an arraylist in order to obtain first dbname occurrence
 		String dbnameLine; //a single line where "dbname=" appears
@@ -152,8 +157,10 @@ class ConfigParser {
 	 * @return application name
 	 */
 	public void readApplicationName() throws IOException {
+		File file = new File("./"+getFilename());
+		String path = file.getAbsolutePath();
 		Pattern pattern = Pattern.compile("^d?^b?name=\\w+"); //create pattern to match application name
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/user/Downloads/Task-Two-master/src/" + getFilename()));
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
 		String line= bufferedReader.readLine();
 		ArrayList<String> appNameLines = new ArrayList(); //store every line that application name appears into an arraylist in order to obtain first dbname occurrence
 		String appNameLine; //a single line where application name appears
