@@ -38,17 +38,15 @@ public class Main {
 			ConfigParser config = new ConfigParser();
 			System.out.println(config.get("dbname"));
 			System.out.println(config.get("application.name"));
-		}
-		if (isStaging()) {
+		} else if (isStaging()) {
 			ConfigParser config = new ConfigParser();
 			System.out.println(config.get("dbname"));
 			System.out.println(config.get("application.name"));
-		}
-		if (isDevelopment()) {
+		} else if (isDevelopment()) {
 			ConfigParser config = new ConfigParser();
 			System.out.println(config.get("dbname"));
 			System.out.println(config.get("application.name"));
-		}
+		} else {System.err.println("unrecognised environment. specify appropriate environment");}
 	}
 
 	/**
