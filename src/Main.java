@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Main {
     public static String[] arguments; //String array of environments(production,staging or development)
 
@@ -129,7 +128,7 @@ class ConfigParser {
      * @throws IOException if problem with reading file
      */
     public void readData() throws IOException {
-        File file = new File("./" + getFilename());
+        File file = new File("./src/"+getFilename());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file)); //using most enhanced character-based reader, BufferReader
         String line = bufferedReader.readLine(); //individual line
         List<String> lines = new ArrayList<>(); //list of lines
