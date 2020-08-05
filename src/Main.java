@@ -128,7 +128,7 @@ class ConfigParser {
      * @throws IOException if problem with reading file
      */
     public void readData() throws IOException {
-        File file = new File("./src/"+getFilename());
+        File file = new File("./"+getFilename());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file)); //using most enhanced character-based reader, BufferReader
         String line = bufferedReader.readLine(); //individual line
         List<String> lines = new ArrayList<>(); //list of lines
