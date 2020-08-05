@@ -5,12 +5,12 @@
  * This software has the following classes:
  * 1. Class Main
  * Class Main has the following methods:
- * i. main mathod
+ * i. main method
  * ii. isProduction()
  * iii. isStaging()
  * iv. isDevelopment()
- * 2. InnerClass ConfigParser
- * Inner Class ConfigParser has the following methods:
+ * 2. Class ConfigParser
+ * Class ConfigParser has the following methods:
  * i. readData()
  * ii. get(String key)
  */
@@ -49,7 +49,6 @@ public class Main {
 
     /**
      * production environment is achieved by passing no argument from commandline.
-     *
      * @return true if production environment
      */
     public static boolean isProduction() {
@@ -175,7 +174,6 @@ class ConfigParser {
 
     /**
      * Gets the value of database name and application name based on key passed.
-     *
      * @return value based on key passed, if key not found, this returns "no such key found"
      * @throws IOException if problem with reading file
      */
