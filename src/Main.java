@@ -38,12 +38,12 @@ public class Main {
             ConfigParser config = new ConfigParser();
             System.out.println(config.get("dbname"));
             System.out.println(config.get("application.name"));
-            System.out.println(config.get("host"));
-            System.out.println(config.get("port"));
-            System.out.println(config.get("context-url"));
-            System.out.println(config.get("mode"));
-            System.out.println(config.get("theme"));
-            System.out.println(config.get("pipeline"));
+            System.out.println(config.get("application.host"));
+            System.out.println(config.get("application.port"));
+            System.out.println(config.get("application.context-url"));
+            System.out.println(config.get("application.mode"));
+            System.out.println(config.get("application.theme"));
+            System.out.println(config.get("application.pipeline"));
         }
     }
 
@@ -130,13 +130,13 @@ class ConfigParser {
     public void readData() throws IOException {
         File file = new File("./");
         String path = file.getAbsolutePath().replace(".", "");
-        String filepath ="";
-        if(path.endsWith("src/")){
+        String filepath = "";
+        if (path.endsWith("src/")) {
             filepath = path;
         } else {
-            filepath = path+"/src/";
+            filepath = path + "/src/";
         }
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(filepath+getFilename())); //using most enhanced character-based reader, BufferReader
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(filepath + getFilename())); //using most enhanced character-based reader, BufferReader
         String line = bufferedReader.readLine(); //individual line
         List<String> lines = new ArrayList<>(); //list of lines
         while (line != null) {
@@ -146,7 +146,25 @@ class ConfigParser {
         for (String value : lines) { //loop over list of lines
             if (value.contains("=")) {
                 String[] keyValue = value.split("=");
-                if (keyValue[0].equals("name")) {
+                if (keyValue[0].equals("name")) { //append "application."
+                    map.putIfAbsent("application." + keyValue[0], keyValue[1]);
+                }
+                if (keyValue[0].equals("host")) {
+                    map.putIfAbsent("application." + keyValue[0], keyValue[1]);
+                }
+                if (keyValue[0].equals("port")) {
+                    map.putIfAbsent("application." + keyValue[0], keyValue[1]);
+                }
+                if (keyValue[0].equals("context-url")) {
+                    map.putIfAbsent("application." + keyValue[0], keyValue[1]);
+                }
+                if (keyValue[0].equals("mode")) {
+                    map.putIfAbsent("application." + keyValue[0], keyValue[1]);
+                }
+                if (keyValue[0].equals("theme")) {
+                    map.putIfAbsent("application." + keyValue[0], keyValue[1]);
+                }
+                if (keyValue[0].equals("pipeline")) {
                     map.putIfAbsent("application." + keyValue[0], keyValue[1]);
                 }
                 map.putIfAbsent(keyValue[0], keyValue[1]);
