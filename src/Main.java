@@ -128,6 +128,7 @@ class ConfigParser {
      * @throws IOException if problem with reading file
      */
     public void readData() throws IOException {
+        //get relative path
         File file = new File("./");
         String path = file.getAbsolutePath().replace(".", "");
         String filepath = "";
