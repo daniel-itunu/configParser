@@ -23,5 +23,6 @@ class ConfigParserTest {
     void get() throws IOException {
         ConfigParser configParser = new ConfigParser("config.txt");
         assertEquals("sq04_db",configParser.get("dbname"));
+        assertEquals("fintek",configParser.get("application.name"));
     }
 }
