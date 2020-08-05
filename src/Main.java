@@ -29,6 +29,8 @@ public class Main {
 		System.out.println(config.get("dbname"));
 		System.out.println(config.get("application.name"));
 		System.out.println(config.get("host"));
+		System.out.println(config.get("port"));
+		System.out.println(config.get("context-url"));
 		System.out.println(config.get("mode"));
 	}
 
@@ -44,15 +46,22 @@ public class Main {
 	 * @return true if "staging" passed from commandline
 	 */
 	public static boolean isStaging() {
-		return arguments.length == 1 && arguments[0].equals("staging");
+		return arguments.length == 1 && arguments[0].toLowerCase().equals("staging");
 	}
 
 	/**
 	 * @return true if "development" passed from commandline
 	 */
 	public static boolean isDevelopment() {
-		return arguments.length == 1 && arguments[0].equals("development");
+		return arguments.length == 1 && arguments[0].toLowerCase().equals("development");
 	}
+
+//	public static boolean none() {
+//		if(arguments.length!=0 && (!(arguments[0].equals("staging"))||!(arguments[0].equals("development")))){
+//			return true;
+//		}
+//		return false;
+//	}
 }
 
 
@@ -85,6 +94,11 @@ class ConfigParser {
 		if (Main.isDevelopment()) {
 			setFilename("config.txt.dev");
 		}
+//		if(Main.none()){
+//			return;
+//			//System.err.println("unrecognised environment");
+//
+//		}
 	}
 
 	/**
@@ -110,6 +124,9 @@ class ConfigParser {
 	 */
 	public void readData() throws IOException {
 		File file = new File("./"+getFilename());
+		if(!file.exists()){
+			System.out.println("unrecognised environment");
+		}
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(file)); //using most enhanced character-based reader, BufferReader
 		String line = bufferedReader.readLine(); //individual line
 		List<String> lines = new ArrayList<>(); //list of lines
@@ -117,7 +134,7 @@ class ConfigParser {
 			lines.add(line);
 			line = bufferedReader.readLine();
 		}
-		for(String value: lines){
+		for(String value: lines){ //loop over list of lines
 			if(value.contains("=")){
 				String[] keyValue = value.split("=");
 				if(keyValue[0].equals("name")){
