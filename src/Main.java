@@ -9,8 +9,8 @@
  * ii. isProduction()
  * iii. isStaging()
  * iv. isDevelopment()
- * 2. InnerClass ConfigParser
- * Inner Class ConfigParser has the following methods:
+ * 2. Class ConfigParser
+ * Class ConfigParser has the following methods:
  * i. readData()
  * ii. get(String key)
  */
